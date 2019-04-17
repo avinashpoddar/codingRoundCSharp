@@ -21,13 +21,12 @@ namespace Code.Tests
             //Arrange
             bool expected = true;
 
-            FlightsTdo testdata = new FlightsTdo
-            {
+            var testdata = new FlightsTdo {
                 FromAirportCity = "Bangalore",
                 ToAirportCity = "Delhi"
             };
 
-            FlightsView flightsView = new FlightsView();
+            var flightsView = new FlightsView();
 
             //Act
             bool actual = flightsView.SearchFlights(testdata);

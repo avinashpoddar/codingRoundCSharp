@@ -13,16 +13,16 @@ namespace Code.Pages
     class HotelsView
     {
         [FindsBy(How = How.LinkText, Using = "Hotels")]
-        private IWebElement hotelLink;
+        private IWebElement _hotelLink;
 
         [FindsBy(How = How.Id, Using = "Tags")]
-        private IWebElement localityTextBox;
+        private IWebElement _localityTextBox;
 
         [FindsBy(How = How.Id, Using = "SearchHotelsButton")]
-        private IWebElement searchButton;
+        private IWebElement _searchButton;
 
         [FindsBy(How = How.Id, Using = "travellersOnhome")]
-        private IWebElement travellerSelection;
+        private IWebElement _travellerSelection;
 
         public HotelsView(IWebDriver driver)
         {
@@ -31,11 +31,10 @@ namespace Code.Pages
 
         public void SearchHotels(HotelsTdo testdata)
         {
-            BrowserContext.ClickElement(hotelLink);
-            BrowserContext.SendText(localityTextBox, testdata.Localtity);
-            BrowserContext.SelectElementFromDropDown(travellerSelection, SelectBy.Text, testdata.TravellerSelection);
-            BrowserContext.ClickElement(searchButton);
+            BrowserContext.ClickElement(_hotelLink);
+            BrowserContext.SendText(_localityTextBox, testdata.Localtity);
+            BrowserContext.SelectElementFromDropDown(_travellerSelection, SelectBy.Text, testdata.TravellerSelection);
+            BrowserContext.ClickElement(_searchButton);
         }
-
     }
 }

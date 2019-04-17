@@ -28,10 +28,10 @@ namespace Code.Tests
             //Arrange
             string expectedError = "There were errors in your submission";
 
-            SignInView signInView = new SignInView();
+            var signInView = new SignInView();
             
             //Act
-            var actualError = signInView.VerifySignInIfDetailsAreMissing();
+            string actualError = signInView.VerifySignInIfDetailsAreMissing();
 
             //Assert
             Assert.True(actualError.Contains(expectedError));        

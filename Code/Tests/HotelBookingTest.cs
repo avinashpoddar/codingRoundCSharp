@@ -17,12 +17,12 @@ namespace Code.Tests
         public void ShouldBeAbleToSearchForHotels()
         {
             //Arrange
-            HotelsTdo testdata = new HotelsTdo {
+            var testdata = new HotelsTdo {
                 Localtity = "Indiranagar, Bangalore",
                 TravellerSelection = "1 room, 2 adults"
             };
 
-            HotelsView hotelsView = new HotelsView(BrowserContext.CurrentDriver);
+            var hotelsView = new HotelsView(BrowserContext.CurrentDriver);
 
             //Act
             hotelsView.SearchHotels(testdata);
