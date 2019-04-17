@@ -1,12 +1,7 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Code.Helpers
 {
@@ -94,6 +89,7 @@ namespace Code.Helpers
                 return false;
             }
         }
+
         public static bool IsElementPresent(ElementIdentifierType elementIdentifierType, string locatorPath)
         {
             try

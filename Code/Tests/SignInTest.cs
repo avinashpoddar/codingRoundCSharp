@@ -1,16 +1,5 @@
-﻿using Code.Helpers;
-using Code.Pages;
+﻿using Code.Pages;
 using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Code.Tests
 {

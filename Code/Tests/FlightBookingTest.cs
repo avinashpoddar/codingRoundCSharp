@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using Code.Helpers;
-using Code.Pages;
+﻿using Code.Pages;
 using Code.TestDataObjects;
 using NUnit.Framework;
-using OpenQA.Selenium;
 
 namespace Code.Tests
 {
