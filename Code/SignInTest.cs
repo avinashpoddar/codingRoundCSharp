@@ -3,7 +3,9 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,14 +14,13 @@ namespace Code
 {
     public class SignInTest
     {
-
         IWebDriver driver = new ChromeDriver();
 
         [Test]
         public void ShouldThrowAnErrorIfSignInDetailsAreMissing()
         {
 
-            setDriverPath();
+            //setDriverPath();
 
             driver.Navigate().GoToUrl("https://www.cleartrip.com/");
             waitFor(2000);
@@ -27,8 +28,10 @@ namespace Code
             driver.FindElement(By.LinkText("Your trips")).Click();
             driver.FindElement(By.Id("SignIn")).Click();
 
-            driver.FindElement(By.Id("signInButton")).Click();
+            //switching to iframe
+            driver.SwitchTo().Frame("modal_window");
 
+            driver.FindElement(By.Id("signInButton")).Click();
             string errors1 = driver.FindElement(By.Id("errors1")).Text;
             Assert.True(errors1.Contains("There were errors in your submission"));
             driver.Quit();
@@ -60,6 +63,11 @@ namespace Code
             {
                 // System.setProperty("webdriver.chrome.driver", "chromedriver_linux");
             }
+        }
+
+        private void LaunchDriver()
+        {
+            
         }
     }
 }
