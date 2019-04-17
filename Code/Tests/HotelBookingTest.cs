@@ -17,18 +17,20 @@ namespace Code.Tests
         public void ShouldBeAbleToSearchForHotels()
         {
             //Arrange
+            string expected = "Indiranagar";
+
             var testdata = new HotelsTdo {
-                Localtity = "Indiranagar, Bangalore",
+                Locality = "Indiranagar, Bangalore",
                 TravellerSelection = "1 room, 2 adults"
             };
 
             var hotelsView = new HotelsView(BrowserContext.CurrentDriver);
 
             //Act
-            hotelsView.SearchHotels(testdata);
+            string actual = hotelsView.SearchHotels(testdata);
 
             //Assert
-            // No assertion as per the test written
+            Assert.AreEqual(expected, actual);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Code.TestDataObjects
 {
     class HotelsTdo
     {
-        public string Localtity { get; set; }
+        public string Locality { get; set; }
         public string TravellerSelection { get; set; }
     }
 }

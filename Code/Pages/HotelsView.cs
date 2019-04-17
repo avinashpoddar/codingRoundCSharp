@@ -2,16 +2,16 @@
 using Code.TestDataObjects;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Code.Pages
 {
     class HotelsView
     {
+        //Locators
+        const string LocalityUlId = "ui-id-1";
+        const string CheckedLocationsXpath = "//nav[@class='locality']//input[@checked='checked']";
+        const string ListTag = "li";
+
         [FindsBy(How = How.LinkText, Using = "Hotels")]
         private IWebElement _hotelLink;
 
@@ -29,12 +29,18 @@ namespace Code.Pages
             PageFactory.InitElements(driver, this);
         }
 
-        public void SearchHotels(HotelsTdo testdata)
+        public string SearchHotels(HotelsTdo testdata)
         {
             BrowserContext.ClickElement(_hotelLink);
-            BrowserContext.SendText(_localityTextBox, testdata.Localtity);
+            BrowserContext.WaitFor(1000);
+            BrowserContext.SendText(_localityTextBox, testdata.Locality);
+            var localities = BrowserContext.GetWebElement(ElementIdentifierType.Id,LocalityUlId)
+                .FindElements(By.TagName(ListTag));
+            BrowserContext.ClickElement(localities[1]);
             BrowserContext.SelectElementFromDropDown(_travellerSelection, SelectBy.Text, testdata.TravellerSelection);
             BrowserContext.ClickElement(_searchButton);
+
+            return BrowserContext.GetWebElement(ElementIdentifierType.Xpath, CheckedLocationsXpath).GetAttribute("value");
         }
     }
 }
