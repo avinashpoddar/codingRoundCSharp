@@ -28,10 +28,15 @@ namespace Code
         [FindsBy(How = How.Id, Using = "travellersOnhome")]
         private IWebElement travellerSelection;
 
-        [Test]
-        public void shouldBeAbleToSearchForHotels()
+        public HotelBookingTest()
         {
-            setDriverPath();
+            PageFactory.InitElements(driver, this);
+        }
+
+        [Test]
+        public void ShouldBeAbleToSearchForHotels()
+        {
+           // SetDriverPath();
 
             driver.Navigate().GoToUrl("https://www.cleartrip.com/");
             hotelLink.Click();
@@ -44,7 +49,7 @@ namespace Code
             driver.Quit();
         }
 
-        private void setDriverPath()
+        private void SetDriverPath()
         {
             if (Environment.OSVersion.Platform == PlatformID.MacOSX)
             {
