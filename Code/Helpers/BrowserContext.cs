@@ -12,23 +12,9 @@ namespace Code.Helpers
 {
     public class BrowserContext
     {
-        public IWebDriver CurrentDriver { get; set; }
-        ChromeOptions options = new ChromeOptions();
-
-        public IWebDriver LaunchChromeBrowser()
-        {
-            options.AddArgument("--disable-notifications");
-            CurrentDriver = new ChromeDriver(options);
-            CurrentDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-            return CurrentDriver;
-        }
-
-        public void NavigateToUrl(string url)
-        {
-            CurrentDriver.Navigate().GoToUrl(url);
-        }
-
-        public IWebElement GetWebElement(ElementIdentifierType elementIdentifierType, string locatorPath)
+        public static IWebDriver CurrentDriver { get; set; }
+        
+        public static IWebElement GetWebElement(ElementIdentifierType elementIdentifierType, string locatorPath)
         {
             switch (elementIdentifierType)
             {
@@ -64,68 +50,27 @@ namespace Code.Helpers
             return null;
         }
 
-        public IReadOnlyList<IWebElement> GetWebElements(ElementIdentifierType elementIdentifierType, string locatorPath)
-        {
-            switch (elementIdentifierType)
-            {
-                case ElementIdentifierType.Id:
-                    {
-                        return CurrentDriver.FindElements(By.Id(locatorPath));
-                    }
-                case ElementIdentifierType.Name:
-                    {
-                        return CurrentDriver.FindElements(By.Name(locatorPath));
-                    }
-                case ElementIdentifierType.Xpath:
-                    {
-                        return CurrentDriver.FindElements(By.XPath(locatorPath));
-                    }
-                case ElementIdentifierType.CSS:
-                    {
-                        return CurrentDriver.FindElements(By.CssSelector(locatorPath));
-                    }
-                case ElementIdentifierType.ClassName:
-                    {
-                        return CurrentDriver.FindElements(By.ClassName(locatorPath));
-                    }
-                case ElementIdentifierType.TagName:
-                    {
-                        return CurrentDriver.FindElements(By.TagName(locatorPath));
-                    }
-                case ElementIdentifierType.LinkText:
-                    {
-                        return CurrentDriver.FindElements(By.LinkText(locatorPath));
-                    }
-            }
-            return null;
-        }
-
-        public void SendText(ElementIdentifierType elementIdentifierType, string locatorPath, string value)
+        public static void SendText(ElementIdentifierType elementIdentifierType, string locatorPath, string value)
         {
             GetWebElement(elementIdentifierType, locatorPath).SendKeys(value);
         }
 
-        public void SendText(IWebElement element, string value)
+        public static void SendText(IWebElement element, string value)
         {
             element.SendKeys(value);
         }
 
-        public void ClickElement(ElementIdentifierType elementIdentifierType, string locatorPath)
+        public static void ClickElement(ElementIdentifierType elementIdentifierType, string locatorPath)
         {
             GetWebElement(elementIdentifierType, locatorPath).Click();
         }
 
-        public void ClickElement(IWebElement element)
+        public static void ClickElement(IWebElement element)
         {
             element.Click();
         }
 
-        public void QuitDriver()
-        {
-            CurrentDriver.Quit();
-        }
-
-        public void WaitFor(int durationInMilliSeconds)
+        public static void WaitFor(int durationInMilliSeconds)
         {
             try
             {
@@ -137,7 +82,7 @@ namespace Code.Helpers
             }
         }
 
-        public bool IsElementPresent(By by)
+        public static bool IsElementPresent(By by)
         {
             try
             {
@@ -149,7 +94,7 @@ namespace Code.Helpers
                 return false;
             }
         }
-        public bool IsElementPresent(ElementIdentifierType elementIdentifierType, string locatorPath)
+        public static bool IsElementPresent(ElementIdentifierType elementIdentifierType, string locatorPath)
         {
             try
             {
@@ -162,7 +107,7 @@ namespace Code.Helpers
             }
         }
 
-        public void SelectElementFromDropDown(IWebElement element, SelectBy selectBy, string value)
+        public static void SelectElementFromDropDown(IWebElement element, SelectBy selectBy, string value)
         {
             SelectElement select = new SelectElement(element);
             switch (selectBy)
@@ -179,17 +124,17 @@ namespace Code.Helpers
             }
         }
 
-        public void SwitchToIframe(string frameName)
+        public static void SwitchToIframe(string frameName)
         {
             CurrentDriver.SwitchTo().Frame(frameName);
         }
 
-        public void SwitchToDefault()
+        public static void SwitchToDefault()
         {
             CurrentDriver.SwitchTo().DefaultContent();
         }
 
-        public string GetTextOfElement(ElementIdentifierType elementIdentifierType, string locatorPath)
+        public static string GetTextOfElement(ElementIdentifierType elementIdentifierType, string locatorPath)
         {
             return GetWebElement(elementIdentifierType, locatorPath).Text;
         }
