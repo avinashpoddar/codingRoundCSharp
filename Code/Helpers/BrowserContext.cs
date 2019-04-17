@@ -19,7 +19,7 @@ namespace Code.Helpers
         {
             options.AddArgument("--disable-notifications");
             CurrentDriver = new ChromeDriver(options);
-            CurrentDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            CurrentDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             return CurrentDriver;
         }
 
@@ -187,6 +187,11 @@ namespace Code.Helpers
         public void SwitchToIframe(string frameName)
         {
             CurrentDriver.SwitchTo().Frame(frameName);
+        }
+
+        public void SwitchToDefault()
+        {
+            CurrentDriver.SwitchTo().DefaultContent();
         }
 
         public string GetTextOfElement(ElementIdentifierType elementIdentifierType, string locatorPath)
