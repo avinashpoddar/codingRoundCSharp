@@ -19,15 +19,15 @@ namespace Code.Pages
         /// <summary>
         /// A method to get the error message when Details are missing
         /// </summary>
-        /// <param name="Browser"></param>
+        /// <param name="BrowserContext"></param>
         /// <returns></returns>
-        public string VerifySignInIfDetailsAreMissing(BrowserContext Browser)
+        public string VerifySignInIfDetailsAreMissing()
         {
-            Browser.ClickElement(ElementIdentifierType.LinkText, YourTripsLinkText);
-            Browser.ClickElement(ElementIdentifierType.Id, SignInBtnId);
-            Browser.SwitchToIframe(SignInWindowIframeName);
-            Browser.ClickElement(ElementIdentifierType.Id, SignInBtnInIframeId);
-            return Browser.GetTextOfElement(ElementIdentifierType.Id, SignInErrorMsgId);
+            BrowserContext.ClickElement(ElementIdentifierType.LinkText, YourTripsLinkText);
+            BrowserContext.ClickElement(ElementIdentifierType.Id, SignInBtnId);
+            BrowserContext.SwitchToIframe(SignInWindowIframeName);
+            BrowserContext.ClickElement(ElementIdentifierType.Id, SignInBtnInIframeId);
+            return BrowserContext.GetTextOfElement(ElementIdentifierType.Id, SignInErrorMsgId);
         }
     }
 }

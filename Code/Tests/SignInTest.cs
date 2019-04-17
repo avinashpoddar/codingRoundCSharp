@@ -14,26 +14,27 @@ using System.Threading.Tasks;
 
 namespace Code.Tests
 {
-    public class SignInTest
+    public class SignInTest : BaseSetup
     {        
+        public override void TestSetUp()
+        {
+            base.TestSetUp();
+            NavigateTo("https://www.cleartrip.com/");
+        }
+
         [Test]
         public void ShouldThrowAnErrorIfSignInDetailsAreMissing()
         {
             //Arrange
             string expectedError = "There were errors in your submission";
-            BrowserContext Browser = new BrowserContext();
+
             SignInView signInView = new SignInView();
             
             //Act
-            Browser.LaunchChromeBrowser();
-            Browser.NavigateToUrl("https://www.cleartrip.com/");
-            var actualError = signInView.VerifySignInIfDetailsAreMissing(Browser);
+            var actualError = signInView.VerifySignInIfDetailsAreMissing();
 
             //Assert
-            Assert.True(actualError.Contains(expectedError));
-
-            //Tear Down
-            Browser.QuitDriver();
+            Assert.True(actualError.Contains(expectedError));        
         }
     }
 }
