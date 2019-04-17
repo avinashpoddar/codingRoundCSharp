@@ -1,4 +1,9 @@
-﻿using System;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.PageObjects;
+using OpenQA.Selenium.Support.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,48 +14,50 @@ namespace Code
     public class HotelBookingTest
     {
 
-        WebDriver driver = new ChromeDriver();
+        IWebDriver driver = new ChromeDriver();
 
-        @FindBy(linkText = "Hotels")
-    private WebElement hotelLink;
+        [FindsBy(How = How.LinkText, Using = "Hotels")]
+        private IWebElement hotelLink;
 
-        @FindBy(id = "Tags")
-    private WebElement localityTextBox;
+        [FindsBy(How = How.Id, Using = "Tags")]
+        private IWebElement localityTextBox;
 
-        @FindBy(id = "SearchHotelsButton")
-    private WebElement searchButton;
+        [FindsBy(How = How.Id, Using = "SearchHotelsButton")]
+        private IWebElement searchButton;
 
-        @FindBy(id = "travellersOnhome")
-    private WebElement travellerSelection;
+        [FindsBy(How = How.Id, Using = "travellersOnhome")]
+        private IWebElement travellerSelection;
 
-        @Test
-    public void shouldBeAbleToSearchForHotels()
+        [Test]
+        public void shouldBeAbleToSearchForHotels()
         {
             setDriverPath();
 
-            driver.get("https://www.cleartrip.com/");
-            hotelLink.click();
+            driver.Navigate().GoToUrl("https://www.cleartrip.com/");
+            hotelLink.Click();
 
-            localityTextBox.sendKeys("Indiranagar, Bangalore");
+            localityTextBox.SendKeys("Indiranagar, Bangalore");
 
-            new Select(travellerSelection).selectByVisibleText("1 room, 2 adults");
-            searchButton.click();
+            new SelectElement(travellerSelection).SelectByText("1 room, 2 adults");
+            searchButton.Click();
 
-            driver.quit();
-
+            driver.Quit();
         }
 
         private void setDriverPath()
         {
-             if (PlatformUtil.isMac()) {
-                 System.setProperty("webdriver.chrome.driver", "chromedriver");
-             }
-             if (PlatformUtil.isWindows()) {
-                 System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
-             }
-             if (PlatformUtil.isLinux()) {
-                 System.setProperty("webdriver.chrome.driver", "chromedriver_linux");
-             }
+            if (Environment.OSVersion.Platform == PlatformID.MacOSX)
+            {
+                //System.setProperty("webdriver.chrome.driver", "chromedriver");
+            }
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                // System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+            }
+            if (Environment.OSVersion.Platform == PlatformID.Unix)
+            {
+                // System.setProperty("webdriver.chrome.driver", "chromedriver_linux");
+            }
         }
 
     }

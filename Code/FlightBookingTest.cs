@@ -1,52 +1,56 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Threading;
+using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 
 namespace Code
 {
     public class FlightBookingTest
     {
-        WebDriver driver = new ChromeDriver();
+        IWebDriver driver = new ChromeDriver();
 
-        @Test
+        [Test]
         public void testThatResultsAppearForAOneWayJourney()
         {
 
             setDriverPath();
 
-            driver.get("https://www.cleartrip.com/");
+            driver.Navigate().GoToUrl("https://www.cleartrip.com/");
             waitFor(2000);
-            driver.findElement(By.id("OneWay")).click();
+            driver.FindElement(By.Id("OneWay")).Click();
 
-            driver.findElement(By.id("FromTag")).clear();
-            driver.findElement(By.id("FromTag")).sendKeys("Bangalore");
+            driver.FindElement(By.Id("FromTag")).Clear();
+            driver.FindElement(By.Id("FromTag")).SendKeys("Bangalore");
 
             //wait for the auto complete options to appear for the origin
 
             waitFor(2000);
-            List<WebElement> originOptions = driver.findElement(By.id("ui-id-1")).findElements(By.tagName("li"));
-            originOptions.get(0).click();
+            IReadOnlyList<IWebElement> originOptions = driver.FindElement(By.Id("ui-id-1")).FindElements(By.TagName("li"));
+            originOptions[0].Click();
 
-            driver.findElement(By.id("toTag")).clear();
-            driver.findElement(By.id("toTag")).sendKeys("Delhi");
+            driver.FindElement(By.Id("toTag")).Clear();
+            driver.FindElement(By.Id("toTag")).SendKeys("Delhi");
 
             //wait for the auto complete options to appear for the destination
 
             waitFor(2000);
             //select the first item from the destination auto complete list
-            List<WebElement> destinationOptions = driver.findElement(By.id("ui-id-2")).findElements(By.tagName("li"));
-            destinationOptions.get(0).click();
+            IReadOnlyList<IWebElement> destinationOptions = driver.FindElement(By.Id("ui-id-2")).FindElements(By.TagName("li"));
+            destinationOptions[0].Click();
 
-            driver.findElement(By.xpath("//*[@id='ui-datepicker-div']/div[1]/table/tbody/tr[3]/td[7]/a")).click();
+            driver.FindElement(By.XPath("//*[@id='ui-datepicker-div']/div[1]/table/tbody/tr[3]/td[7]/a")).Click();
 
             //all fields filled in. Now click on search
-            driver.findElement(By.id("SearchBtn")).click();
+            driver.FindElement(By.Id("SearchBtn")).Click();
 
             waitFor(5000);
             //verify that result appears for the provided journey search
-            Assert.assertTrue(isElementPresent(By.className("searchSummary")));
+            Assert.True(isElementPresent(By.ClassName("searchSummary")));
 
             //close the browser
-            driver.quit();
+            driver.Quit();
 
         }
 
@@ -55,20 +59,20 @@ namespace Code
         {
             try
             {
-                Thread.sleep(durationInMilliSeconds);
+                Thread.Sleep(durationInMilliSeconds);
             }
-            catch (InterruptedException e)
+            catch (ThreadInterruptedException e)
             {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                Console.WriteLine(e.StackTrace);  //To change body of catch statement use File | Settings | File Templates.
             }
         }
 
 
-        private boolean isElementPresent(By by)
+        private bool isElementPresent(By by)
         {
             try
             {
-                driver.findElement(by);
+                driver.FindElement(by);
                 return true;
             }
             catch (NoSuchElementException e)
@@ -79,14 +83,17 @@ namespace Code
 
         private void setDriverPath()
         {
-            if (PlatformUtil.isMac()) {
-                System.setProperty("webdriver.chrome.driver", "chromedriver");
+            if (Environment.OSVersion.Platform == PlatformID.MacOSX)
+            {
+                //System.setProperty("webdriver.chrome.driver", "chromedriver");
             }
-            if (PlatformUtil.isWindows()) {
-                System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                // System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
             }
-            if (PlatformUtil.isLinux()) {
-                System.setProperty("webdriver.chrome.driver", "chromedriver_linux");
+            if (Environment.OSVersion.Platform == PlatformID.Unix)
+            {
+                // System.setProperty("webdriver.chrome.driver", "chromedriver_linux");
             }
         }
     }

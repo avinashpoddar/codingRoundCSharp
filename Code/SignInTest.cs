@@ -1,7 +1,11 @@
-﻿using System;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Code
@@ -9,49 +13,52 @@ namespace Code
     public class SignInTest
     {
 
-        WebDriver driver = new ChromeDriver();
+        IWebDriver driver = new ChromeDriver();
 
-        @Test
-     public void shouldThrowAnErrorIfSignInDetailsAreMissing()
+        [Test]
+        public void ShouldThrowAnErrorIfSignInDetailsAreMissing()
         {
 
             setDriverPath();
-            
-            driver.get("https://www.cleartrip.com/");
+
+            driver.Navigate().GoToUrl("https://www.cleartrip.com/");
             waitFor(2000);
 
-            driver.findElement(By.linkText("Your trips")).click();
-            driver.findElement(By.id("SignIn")).click();
+            driver.FindElement(By.LinkText("Your trips")).Click();
+            driver.FindElement(By.Id("SignIn")).Click();
 
-            driver.findElement(By.id("signInButton")).click();
+            driver.FindElement(By.Id("signInButton")).Click();
 
-            String errors1 = driver.findElement(By.id("errors1")).getText();
-            Assert.assertTrue(errors1.contains("There were errors in your submission"));
-            driver.quit();
+            string errors1 = driver.FindElement(By.Id("errors1")).Text;
+            Assert.True(errors1.Contains("There were errors in your submission"));
+            driver.Quit();
         }
 
         private void waitFor(int durationInMilliSeconds)
         {
             try
             {
-                Thread.sleep(durationInMilliSeconds);
+                Thread.Sleep(durationInMilliSeconds);
             }
-            catch (InterruptedException e)
+            catch (ThreadInterruptedException e)
             {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                Console.WriteLine(e.StackTrace);  //To change body of catch statement use File | Settings | File Templates.
             }
         }
 
         private void setDriverPath()
         {
-            if (PlatformUtil.isMac()) {
-                System.setProperty("webdriver.chrome.driver", "chromedriver");
+            if (Environment.OSVersion.Platform == PlatformID.MacOSX)
+            {
+                //System.setProperty("webdriver.chrome.driver", "chromedriver");
             }
-            if (PlatformUtil.isWindows()) {
-                System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                // System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
             }
-            if (PlatformUtil.isLinux()) {
-                System.setProperty("webdriver.chrome.driver", "chromedriver_linux");
+            if (Environment.OSVersion.Platform == PlatformID.Unix)
+            {
+                // System.setProperty("webdriver.chrome.driver", "chromedriver_linux");
             }
         }
     }
