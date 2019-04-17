@@ -1,20 +1,15 @@
-﻿using NUnit.Framework;
+﻿using Code.Helpers;
+using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.PageObjects;
-using OpenQA.Selenium.Support.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Code
 {
     public class HotelBookingTest
     {
+        IWebDriver driver;
 
-        IWebDriver driver = new ChromeDriver();
+        BrowserContext Browser = new BrowserContext();        
 
         [FindsBy(How = How.LinkText, Using = "Hotels")]
         private IWebElement hotelLink;
@@ -30,40 +25,20 @@ namespace Code
 
         public HotelBookingTest()
         {
+            driver = Browser.LaunchChromeBrowser();
             PageFactory.InitElements(driver, this);
         }
 
         [Test]
         public void ShouldBeAbleToSearchForHotels()
         {
-           // SetDriverPath();
-
-            driver.Navigate().GoToUrl("https://www.cleartrip.com/");
-            hotelLink.Click();
-
-            localityTextBox.SendKeys("Indiranagar, Bangalore");
-
-            new SelectElement(travellerSelection).SelectByText("1 room, 2 adults");
-            searchButton.Click();
-
-            driver.Quit();
+            //Browser.SetDriverPath();
+            Browser.NavigateToUrl("https://www.cleartrip.com/");            
+            Browser.ClickElement(hotelLink);
+            Browser.SendText(localityTextBox, "Indiranagar, Bangalore");
+            Browser.SelectElementFromDropDown(travellerSelection, SelectBy.Text, "1 room, 2 adults");
+            Browser.ClickElement(searchButton);
+            Browser.QuitDriver();
         }
-
-        private void SetDriverPath()
-        {
-            if (Environment.OSVersion.Platform == PlatformID.MacOSX)
-            {
-                //System.setProperty("webdriver.chrome.driver", "chromedriver");
-            }
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-            {
-                // System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
-            }
-            if (Environment.OSVersion.Platform == PlatformID.Unix)
-            {
-                // System.setProperty("webdriver.chrome.driver", "chromedriver_linux");
-            }
-        }
-
     }
 }
