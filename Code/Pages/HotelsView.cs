@@ -29,12 +29,12 @@ namespace Code.Pages
             PageFactory.InitElements(driver, this);
         }
 
-        public void SearchHotels(BrowserContext Browser, HotelsTdo testdata)
+        public void SearchHotels(HotelsTdo testdata)
         {
-            Browser.ClickElement(hotelLink);
-            Browser.SendText(localityTextBox, testdata.Localtity);
-            Browser.SelectElementFromDropDown(travellerSelection, SelectBy.Text, testdata.TravellerSelection);
-            Browser.ClickElement(searchButton);
+            BrowserContext.ClickElement(hotelLink);
+            BrowserContext.SendText(localityTextBox, testdata.Localtity);
+            BrowserContext.SelectElementFromDropDown(travellerSelection, SelectBy.Text, testdata.TravellerSelection);
+            BrowserContext.ClickElement(searchButton);
         }
 
     }
