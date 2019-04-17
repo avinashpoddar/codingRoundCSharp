@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Code.Helpers;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
@@ -14,60 +15,24 @@ namespace Code
 {
     public class SignInTest
     {
-        IWebDriver driver = new ChromeDriver();
-
+        BrowserContext Browser = new BrowserContext();
         [Test]
         public void ShouldThrowAnErrorIfSignInDetailsAreMissing()
         {
-
-            //setDriverPath();
-
-            driver.Navigate().GoToUrl("https://www.cleartrip.com/");
-            waitFor(2000);
-
-            driver.FindElement(By.LinkText("Your trips")).Click();
-            driver.FindElement(By.Id("SignIn")).Click();
+            //Browser.SetDriverPath();
+            Browser.LaunchChromeBrowser();
+            Browser.NavigateToUrl("https://www.cleartrip.com/");
+            Browser.WaitFor(2000);
+            Browser.ClickElement(ElementIdentifierType.LinkText, "Your trips");
+            Browser.ClickElement(ElementIdentifierType.Id, "SignIn");
 
             //switching to iframe
-            driver.SwitchTo().Frame("modal_window");
+            Browser.SwitchToIframe("modal_window");
 
-            driver.FindElement(By.Id("signInButton")).Click();
-            string errors1 = driver.FindElement(By.Id("errors1")).Text;
+            Browser.ClickElement(ElementIdentifierType.Id, "signInButton");
+            string errors1 = Browser.GetTextOfElement(ElementIdentifierType.Id, "errors1");
             Assert.True(errors1.Contains("There were errors in your submission"));
-            driver.Quit();
-        }
-
-        private void waitFor(int durationInMilliSeconds)
-        {
-            try
-            {
-                Thread.Sleep(durationInMilliSeconds);
-            }
-            catch (ThreadInterruptedException e)
-            {
-                Console.WriteLine(e.StackTrace);  //To change body of catch statement use File | Settings | File Templates.
-            }
-        }
-
-        private void setDriverPath()
-        {
-            if (Environment.OSVersion.Platform == PlatformID.MacOSX)
-            {
-                //System.setProperty("webdriver.chrome.driver", "chromedriver");
-            }
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-            {
-                // System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
-            }
-            if (Environment.OSVersion.Platform == PlatformID.Unix)
-            {
-                // System.setProperty("webdriver.chrome.driver", "chromedriver_linux");
-            }
-        }
-
-        private void LaunchDriver()
-        {
-            
+            Browser.QuitDriver();
         }
     }
 }

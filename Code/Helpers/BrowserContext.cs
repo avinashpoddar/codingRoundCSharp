@@ -56,6 +56,10 @@ namespace Code.Helpers
                     {
                         return CurrentDriver.FindElement(By.TagName(locatorPath));
                     }
+                case ElementIdentifierType.LinkText:
+                    {
+                        return CurrentDriver.FindElement(By.LinkText(locatorPath));
+                    }
             }
             return null;
         }
@@ -87,6 +91,10 @@ namespace Code.Helpers
                 case ElementIdentifierType.TagName:
                     {
                         return CurrentDriver.FindElements(By.TagName(locatorPath));
+                    }
+                case ElementIdentifierType.LinkText:
+                    {
+                        return CurrentDriver.FindElements(By.LinkText(locatorPath));
                     }
             }
             return null;
@@ -175,6 +183,17 @@ namespace Code.Helpers
                     break;
             }
         }
+
+        public void SwitchToIframe(string frameName)
+        {
+            CurrentDriver.SwitchTo().Frame(frameName);
+        }
+
+        public string GetTextOfElement(ElementIdentifierType elementIdentifierType, string locatorPath)
+        {
+            return GetWebElement(elementIdentifierType, locatorPath).Text;
+        }
+
         /// <summary>
         /// This method is not relevant for now for the current scenario
         /// However it seems that this Method was used to get the OS and according set the Chrome Driver Property in Java
@@ -203,7 +222,8 @@ namespace Code.Helpers
         Xpath,
         CSS,
         ClassName,
-        TagName
+        TagName,
+        LinkText
     }
     public enum SelectBy
     {
