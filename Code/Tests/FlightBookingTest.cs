@@ -7,8 +7,14 @@ using OpenQA.Selenium;
 
 namespace Code.Tests
 {
-    public class FlightBookingTest
+    public class FlightBookingTest : BaseSetup
     {
+        public override void TestSetUp()
+        {
+            base.TestSetUp();
+            NavigateTo("https://www.cleartrip.com/");
+        }
+
         [Test]
         public void TestThatResultsAppearForAOneWayJourney()
         {
@@ -21,19 +27,13 @@ namespace Code.Tests
                 ToAirportCity = "Delhi"
             };
 
-            BrowserContext Browser = new BrowserContext();
             FlightsView flightsView = new FlightsView();
 
             //Act
-            Browser.LaunchChromeBrowser();
-            Browser.NavigateToUrl("https://www.cleartrip.com/");
-           bool actual = flightsView.SearchFlights(Browser, testdata);
+            bool actual = flightsView.SearchFlights(testdata);
 
             //Assert
             Assert.AreEqual(expected, actual);
-
-            //close the browser
-            Browser.QuitDriver();
         }
     }
 }

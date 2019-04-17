@@ -25,34 +25,34 @@ namespace Code.Pages
         /// <summary>
         /// A method to Search flights based on the test data
         /// </summary>
-        /// <param name="Browser"></param>
+        /// <param name="BrowserContext"></param>
         /// <param name="testdata"></param>
         /// <returns>Whether search results appear or not</returns>
-        public bool SearchFlights(BrowserContext Browser, FlightsTdo testdata)
+        public bool SearchFlights(FlightsTdo testdata)
         {
             //Click oneway radio button
-            Browser.ClickElement(ElementIdentifierType.Id, OneWayRadioBtnId);
+            BrowserContext.ClickElement(ElementIdentifierType.Id, OneWayRadioBtnId);
 
             //Select origin
-            Browser.SendText(ElementIdentifierType.Id, FromAirportCityId, testdata.FromAirportCity);
-            var originOptions = Browser.GetWebElement(ElementIdentifierType.Id, FromAutoCompleteULId)
+            BrowserContext.SendText(ElementIdentifierType.Id, FromAirportCityId, testdata.FromAirportCity);
+            var originOptions = BrowserContext.GetWebElement(ElementIdentifierType.Id, FromAutoCompleteULId)
                 .FindElements(By.TagName(ListTag));
-            Browser.ClickElement(originOptions.FirstOrDefault());
+            BrowserContext.ClickElement(originOptions.FirstOrDefault());
 
             //Select to
-            Browser.SendText(ElementIdentifierType.Id, ToAirportCityId, testdata.ToAirportCity);
-            var destinationOptions = Browser.GetWebElement(ElementIdentifierType.Id, ToAutoCompleteULId)
+            BrowserContext.SendText(ElementIdentifierType.Id, ToAirportCityId, testdata.ToAirportCity);
+            var destinationOptions = BrowserContext.GetWebElement(ElementIdentifierType.Id, ToAutoCompleteULId)
                 .FindElements(By.TagName(ListTag));
-            Browser.ClickElement(destinationOptions.FirstOrDefault());
+            BrowserContext.ClickElement(destinationOptions.FirstOrDefault());
 
             //Set Travel Date
-            Browser.ClickElement(ElementIdentifierType.Xpath, UiDatePickerXpath);
+            BrowserContext.ClickElement(ElementIdentifierType.Xpath, UiDatePickerXpath);
 
             //Search
-            Browser.ClickElement(ElementIdentifierType.Id, SearchButtonId);
+            BrowserContext.ClickElement(ElementIdentifierType.Id, SearchButtonId);
             
             //verify that result appears for the provided journey search
-            return Browser.IsElementPresent(By.ClassName(SearchSummaryClass));
+            return BrowserContext.IsElementPresent(By.ClassName(SearchSummaryClass));
         }
     }
 }
