@@ -3,7 +3,7 @@ using Code.Pages;
 using Code.TestDataObjects;
 using NUnit.Framework;
 
-namespace Code
+namespace Code.Tests
 {
     public class HotelBookingTest
     {

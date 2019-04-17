@@ -61,14 +61,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FlightBookingTest.cs" />
+    <Compile Include="Tests\FlightBookingTest.cs" />
     <Compile Include="Helpers\BrowserContext.cs" />
-    <Compile Include="HotelBookingTest.cs" />
+    <Compile Include="Tests\HotelBookingTest.cs" />
     <Compile Include="Pages\FlightsView.cs" />
     <Compile Include="Pages\HotelsView.cs" />
     <Compile Include="Pages\SignInView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SignInTest.cs" />
+    <Compile Include="Tests\SignInTest.cs" />
     <Compile Include="TestDataObjects\FlightsTdo.cs" />
     <Compile Include="TestDataObjects\HotelsTdo.cs" />
   </ItemGroup>

@@ -5,7 +5,7 @@ using Code.TestDataObjects;
 using NUnit.Framework;
 using OpenQA.Selenium;
 
-namespace Code
+namespace Code.Tests
 {
     public class FlightBookingTest
     {

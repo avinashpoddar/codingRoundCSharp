@@ -12,11 +12,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Code
+namespace Code.Tests
 {
     public class SignInTest
-    {
-        
+    {        
         [Test]
         public void ShouldThrowAnErrorIfSignInDetailsAreMissing()
         {
