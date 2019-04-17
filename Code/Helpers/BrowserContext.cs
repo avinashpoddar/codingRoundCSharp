@@ -92,7 +92,7 @@ namespace Code.Helpers
             return null;
         }
 
-        public void Clear(ElementIdentifierType elementIdentifierType, string locatorPath)
+        public void ClearField(ElementIdentifierType elementIdentifierType, string locatorPath)
         {
             GetWebElement(elementIdentifierType, locatorPath).Clear();
         }
