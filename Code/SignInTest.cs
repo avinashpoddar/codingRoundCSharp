@@ -1,4 +1,5 @@
 ﻿using Code.Helpers;
+using Code.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -15,23 +16,24 @@ namespace Code
 {
     public class SignInTest
     {
-        BrowserContext Browser = new BrowserContext();
+        
         [Test]
         public void ShouldThrowAnErrorIfSignInDetailsAreMissing()
         {
-            //Browser.SetDriverPath();
+            //Arrange
+            string expectedError = "There were errors in your submission";
+            BrowserContext Browser = new BrowserContext();
+            SignInView signInView = new SignInView();
+            
+            //Act
             Browser.LaunchChromeBrowser();
             Browser.NavigateToUrl("https://www.cleartrip.com/");
-            Browser.WaitFor(2000);
-            Browser.ClickElement(ElementIdentifierType.LinkText, "Your trips");
-            Browser.ClickElement(ElementIdentifierType.Id, "SignIn");
+            var actualError = signInView.VerifySignInIfDetailsAreMissing(Browser);
 
-            //switching to iframe
-            Browser.SwitchToIframe("modal_window");
+            //Assert
+            Assert.True(actualError.Contains(expectedError));
 
-            Browser.ClickElement(ElementIdentifierType.Id, "signInButton");
-            string errors1 = Browser.GetTextOfElement(ElementIdentifierType.Id, "errors1");
-            Assert.True(errors1.Contains("There were errors in your submission"));
+            //Tear Down
             Browser.QuitDriver();
         }
     }
