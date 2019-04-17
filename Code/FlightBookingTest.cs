@@ -9,16 +9,24 @@ namespace Code
 {
     public class FlightBookingTest
     {
-        IWebDriver driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+
+        IWebDriver driver;
+
+        public FlightBookingTest()
+        {
+            options.AddArgument("--disable-notifications");
+            driver = new ChromeDriver(options);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+        }
 
         [Test]
-        public void testThatResultsAppearForAOneWayJourney()
+        public void TestThatResultsAppearForAOneWayJourney()
         {
-
-            setDriverPath();
+            // setDriverPath();
 
             driver.Navigate().GoToUrl("https://www.cleartrip.com/");
-            waitFor(2000);
+            WaitFor(2000);
             driver.FindElement(By.Id("OneWay")).Click();
 
             driver.FindElement(By.Id("FromTag")).Clear();
@@ -26,17 +34,18 @@ namespace Code
 
             //wait for the auto complete options to appear for the origin
 
-            waitFor(2000);
-            IReadOnlyList<IWebElement> originOptions = driver.FindElement(By.Id("ui-id-1")).FindElements(By.TagName("li"));
+            WaitFor(2000);
+            IReadOnlyList <IWebElement> originOptions = driver.FindElement(By.Id("ui-id-1")).FindElements(By.TagName("li"));
             originOptions[0].Click();
 
-            driver.FindElement(By.Id("toTag")).Clear();
-            driver.FindElement(By.Id("toTag")).SendKeys("Delhi");
+            driver.FindElement(By.Id("ToTag")).Clear();
+            driver.FindElement(By.Id("ToTag")).SendKeys("Delhi");
 
             //wait for the auto complete options to appear for the destination
 
-            waitFor(2000);
+            WaitFor(2000);
             //select the first item from the destination auto complete list
+
             IReadOnlyList<IWebElement> destinationOptions = driver.FindElement(By.Id("ui-id-2")).FindElements(By.TagName("li"));
             destinationOptions[0].Click();
 
@@ -45,9 +54,9 @@ namespace Code
             //all fields filled in. Now click on search
             driver.FindElement(By.Id("SearchBtn")).Click();
 
-            waitFor(5000);
+            WaitFor(5000);
             //verify that result appears for the provided journey search
-            Assert.True(isElementPresent(By.ClassName("searchSummary")));
+            Assert.True(IsElementPresent(By.ClassName("searchSummary")));
 
             //close the browser
             driver.Quit();
@@ -55,7 +64,7 @@ namespace Code
         }
 
 
-        private void waitFor(int durationInMilliSeconds)
+        private void WaitFor(int durationInMilliSeconds)
         {
             try
             {
@@ -68,7 +77,7 @@ namespace Code
         }
 
 
-        private bool isElementPresent(By by)
+        private bool IsElementPresent(By by)
         {
             try
             {
@@ -80,8 +89,8 @@ namespace Code
                 return false;
             }
         }
-
-        private void setDriverPath()
+               
+        private void SetDriverPath()
         {
             if (Environment.OSVersion.Platform == PlatformID.MacOSX)
             {
