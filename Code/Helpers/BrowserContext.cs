@@ -28,7 +28,7 @@ namespace Code.Helpers
             CurrentDriver.Navigate().GoToUrl(url);
         }
 
-        private IWebElement GetWebElement(ElementIdentifierType elementIdentifierType, string locatorPath)
+        public IWebElement GetWebElement(ElementIdentifierType elementIdentifierType, string locatorPath)
         {
             switch (elementIdentifierType)
             {
@@ -64,7 +64,7 @@ namespace Code.Helpers
             return null;
         }
 
-        private IReadOnlyCollection<IWebElement> GetWebElements(ElementIdentifierType elementIdentifierType, string locatorPath)
+        public IReadOnlyList<IWebElement> GetWebElements(ElementIdentifierType elementIdentifierType, string locatorPath)
         {
             switch (elementIdentifierType)
             {
@@ -98,11 +98,6 @@ namespace Code.Helpers
                     }
             }
             return null;
-        }
-
-        public void ClearField(ElementIdentifierType elementIdentifierType, string locatorPath)
-        {
-            GetWebElement(elementIdentifierType, locatorPath).Clear();
         }
 
         public void SendText(ElementIdentifierType elementIdentifierType, string locatorPath, string value)
@@ -201,7 +196,7 @@ namespace Code.Helpers
 
         /// <summary>
         /// This method is not relevant for now for the current scenario
-        /// However it seems that this Method was used to get the OS and according set the Chrome Driver Property in Java
+        /// However it seems that this Method was used to get the OS and accordingly set the Chrome Driver Property in Java
         /// </summary>
         public void SetDriverPath()
         {
