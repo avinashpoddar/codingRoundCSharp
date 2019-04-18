@@ -21,7 +21,6 @@ namespace Code.Pages
         /// <summary>
         /// A method to Search flights based on the test data
         /// </summary>
-        /// <param name="BrowserContext"></param>
         /// <param name="testdata"></param>
         /// <returns>Whether search results appear or not</returns>
         public bool SearchFlights(FlightsTdo testdata)
