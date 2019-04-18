@@ -17,7 +17,7 @@ namespace Code.Tests
         public void ShouldBeAbleToSearchForHotels()
         {
             //Arrange
-            string expected = "Indiranagar";
+            bool expected = true;
 
             var testdata = new HotelsTdo {
                 Locality = "Indiranagar, Bangalore",
@@ -27,7 +27,7 @@ namespace Code.Tests
             var hotelsView = new HotelsView(BrowserContext.CurrentDriver);
 
             //Act
-            string actual = hotelsView.SearchHotels(testdata);
+            bool actual = hotelsView.SearchHotels(testdata);
 
             //Assert
             Assert.AreEqual(expected, actual);
