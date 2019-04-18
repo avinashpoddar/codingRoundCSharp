@@ -20,7 +20,7 @@ namespace Code.Tests
             var signInView = new SignInView();
             
             //Act
-            string actualError = signInView.VerifySignInIfDetailsAreMissing();
+            string actualError = signInView.GetErrorMessageIfSignInDetailsAreMissing();
 
             //Assert
             Assert.True(actualError.Contains(expectedError));        

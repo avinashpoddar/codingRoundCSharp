@@ -14,9 +14,8 @@ namespace Code.Pages
         /// <summary>
         /// A method to get the error message when Details are missing
         /// </summary>
-        /// <param name="BrowserContext"></param>
-        /// <returns></returns>
-        public string VerifySignInIfDetailsAreMissing()
+        /// <returns>Error Message</returns>
+        public string GetErrorMessageIfSignInDetailsAreMissing()
         {
             BrowserContext.ClickElement(ElementIdentifierType.LinkText, YourTripsLinkText);
             BrowserContext.ClickElement(ElementIdentifierType.Id, SignInBtnId);
