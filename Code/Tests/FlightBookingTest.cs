@@ -16,8 +16,6 @@ namespace Code.Tests
         public void TestThatResultsAppearForAOneWayJourney()
         {
             //Arrange
-            bool expected = true;
-
             var testdata = new FlightsTdo {
                 FromAirportCity = "Bangalore",
                 ToAirportCity = "Delhi"
@@ -29,7 +27,7 @@ namespace Code.Tests
             bool actual = flightsView.SearchFlights(testdata);
 
             //Assert
-            Assert.AreEqual(expected, actual);
+            Assert.True(actual,"Search results not found");
         }
     }
 }

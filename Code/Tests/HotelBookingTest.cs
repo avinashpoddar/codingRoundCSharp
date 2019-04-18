@@ -17,8 +17,6 @@ namespace Code.Tests
         public void ShouldBeAbleToSearchForHotels()
         {
             //Arrange
-            bool expected = true;
-
             var testdata = new HotelsTdo {
                 Locality = "Indiranagar, Bangalore",
                 TravellerSelection = "1 room, 2 adults"
@@ -30,7 +28,7 @@ namespace Code.Tests
             bool actual = hotelsView.SearchHotels(testdata);
 
             //Assert
-            Assert.AreEqual(expected, actual);
+            Assert.True(actual,"Search Result not found");
         }
     }
 }
