@@ -9,8 +9,8 @@ namespace Code.Pages
     {
         //Locators
         const string LocalityUlId = "ui-id-1";
-        const string CheckedLocationsXpath = "//nav[@class='locality']//input[@checked='checked']";
         const string ListTag = "li";
+        const string SearchSummaryClass = "searchSummary";
 
         [FindsBy(How = How.LinkText, Using = "Hotels")]
         private IWebElement _hotelLink;
@@ -29,7 +29,12 @@ namespace Code.Pages
             PageFactory.InitElements(driver, this);
         }
 
-        public string SearchHotels(HotelsTdo testdata)
+        /// <summary>
+        /// A method to search hotels 
+        /// </summary>
+        /// <param name="testdata"></param>
+        /// <returns>Whether search results appear or not</returns>
+        public bool SearchHotels(HotelsTdo testdata)
         {
             BrowserContext.ClickElement(_hotelLink);
             BrowserContext.WaitFor(1000);
@@ -40,7 +45,7 @@ namespace Code.Pages
             BrowserContext.SelectElementFromDropDown(_travellerSelection, SelectBy.Text, testdata.TravellerSelection);
             BrowserContext.ClickElement(_searchButton);
 
-            return BrowserContext.GetWebElement(ElementIdentifierType.Xpath, CheckedLocationsXpath).GetAttribute("value");
+            return BrowserContext.IsElementPresent(ElementIdentifierType.ClassName, SearchSummaryClass);
         }
     }
 }
